@@ -1,0 +1,28 @@
+.preview {
+  margin: 20px 0;
+}
+
+.card-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: green;
+  border-radius: 15px;
+  width: 220px;
+  padding: 5px;
+}
+
+.card-preview h2 {
+  margin: 5px;
+  background-color: aquamarine;
+}
+
+.card-preview img {
+  width: inherit;
+}
+
+.card-preview button {
+  border-radius: 5px;
+  background-color: red;
+  font-weight: bold;
+}
