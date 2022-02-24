@@ -30,7 +30,6 @@ class App extends React.Component {
       cardAttr1,
       cardAttr2,
       cardAttr3,
-      savedCards,
     } = this.state;
     const min = 0;
     const maxAttr = 90;
@@ -51,10 +50,6 @@ class App extends React.Component {
         isSaveButtonDisabled: false,
       });
     }
-    const isItTrue = savedCards.some((item) => item.trunfo === true);
-    this.setState(() => ({
-      hasTrunfo: isItTrue,
-    }));
   }
 
   onInputChange = ({ target }) => {
@@ -73,7 +68,7 @@ class App extends React.Component {
       cardAttr2,
       cardAttr3,
       cardTrunfo,
-      /* savedCards, */
+      savedCards,
     } = this.state;
     const obj = {
       name: cardName,
@@ -85,14 +80,11 @@ class App extends React.Component {
       attr3: cardAttr3,
       trunfo: cardTrunfo,
     };
-    this.setState((prevState) => ({
-      savedCards: [...prevState.savedCards, obj],
-    }));
-    /* console.log(savedCards.some((item) => item.trunfo === true));
-    const isItTrue = savedCards.some((item) => item.trunfo === true);
-    this.setState(() => ({
-      hasTrunfo: isItTrue,
-    })); */
+
+    this.setState({
+      savedCards: [...savedCards, obj],
+    }, this.trunfoValidation);
+
     this.setState(() => ({
       cardName: '',
       cardDescription: '',
@@ -106,17 +98,21 @@ class App extends React.Component {
     }));
   }
 
+  trunfoValidation = () => {
+    const { savedCards } = this.state;
+    const isItTrue = savedCards.some((item) => item.trunfo === true);
+    this.setState(() => ({
+      hasTrunfo: isItTrue,
+    }));
+  };
+
   deleteButton = (index) => {
     const { savedCards } = this.state;
     const arr = [...savedCards];
     arr.splice(index, 1);
     this.setState({
       savedCards: arr,
-    });
-    const isItTrue = savedCards.some((item) => item.trunfo === true);
-    this.setState(() => ({
-      hasTrunfo: isItTrue,
-    }));
+    }, this.trunfoValidation);
   }
 
   render() {
