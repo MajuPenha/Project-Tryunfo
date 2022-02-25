@@ -71,14 +71,14 @@ class App extends React.Component {
       savedCards,
     } = this.state;
     const obj = {
-      name: cardName,
-      descriptin: cardDescription,
-      image: cardImage,
-      rare: cardRare,
-      attr1: cardAttr1,
-      attr2: cardAttr2,
-      attr3: cardAttr3,
-      trunfo: cardTrunfo,
+      cardName,
+      cardDescription,
+      cardImage,
+      cardRare,
+      cardAttr1,
+      cardAttr2,
+      cardAttr3,
+      cardTrunfo,
     };
 
     this.setState({
@@ -100,7 +100,7 @@ class App extends React.Component {
 
   trunfoValidation = () => {
     const { savedCards } = this.state;
-    const isItTrue = savedCards.some((item) => item.trunfo === true);
+    const isItTrue = savedCards.some((item) => item.cardTrunfo === true);
     this.setState(() => ({
       hasTrunfo: isItTrue,
     }));
@@ -159,19 +159,21 @@ class App extends React.Component {
           />
         </div>
         <div>
-          {savedCards.map((item, index) => (<SavedCards
-            key={ index }
-            index={ index }
-            deleteButton={ this.deleteButton }
-            name={ item.name }
-            description={ item.description }
-            attr1={ item.attr1 }
-            attr2={ item.attr2 }
-            attr3={ item.attr }
-            image={ item.image }
-            rare={ item.rare }
-            trunfo={ item.trunfo }
-          />))}
+          {savedCards.map((item, index) => (
+            <SavedCards
+              key={ index }
+              index={ index }
+              deleteButton={ this.deleteButton }
+              cardName={ item.cardName }
+              cardDescription={ item.cardDescription }
+              cardAttr1={ item.cardAttr1 }
+              cardAttr2={ item.cardAttr2 }
+              cardAttr3={ item.cardAttr3 }
+              cardImage={ item.cardImage }
+              cardRare={ item.cardRare }
+              cardTrunfo={ item.cardTrunfo }
+            />
+          ))}
         </div>
       </>
     );
