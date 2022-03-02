@@ -1,6 +1,6 @@
 import React from 'react';
-import Form from './components/Form';
 import Card from './components/Card';
+import Form from './components/Form';
 import SavedCards from './components/SavedCards';
 
 class App extends React.Component {
@@ -95,6 +95,7 @@ class App extends React.Component {
       cardRare: 'normal',
       cardTrunfo: false,
       isSaveButtonDisabled: true,
+      filterName: '',
     }));
   }
 
@@ -115,6 +116,16 @@ class App extends React.Component {
     }, this.trunfoValidation);
   }
 
+  searchBar = ({ target }) => {
+    const { filterName } = this.state;
+    this.setState({
+      filterName: target.value,
+    });
+    console.log(filterName);
+    /*     const { savedCards } = this.state;
+    savedCards.filter((item) => item.cardName.includes(target.value)) */
+  }
+
   render() {
     const {
       cardName,
@@ -129,10 +140,11 @@ class App extends React.Component {
       isSaveButtonDisabled,
     } = this.state;
     const { savedCards } = this.state;
+    const { filterName } = this.state;
     return (
       <>
-        <div>
-          <h1>Tryunfo(ai Jesus!)</h1>
+        <h1>Tryunfo(ai Jesus!)</h1>
+        <div className="main-container">
           <Form
             cardName={ cardName }
             cardDescription={ cardDescription }
@@ -158,22 +170,34 @@ class App extends React.Component {
             cardTrunfo={ cardTrunfo }
           />
         </div>
-        <div>
-          {savedCards.map((item, index) => (
-            <SavedCards
-              key={ index }
-              index={ index }
-              deleteButton={ this.deleteButton }
-              cardName={ item.cardName }
-              cardDescription={ item.cardDescription }
-              cardAttr1={ item.cardAttr1 }
-              cardAttr2={ item.cardAttr2 }
-              cardAttr3={ item.cardAttr3 }
-              cardImage={ item.cardImage }
-              cardRare={ item.cardRare }
-              cardTrunfo={ item.cardTrunfo }
+        <div className="myCards">
+          <label htmlFor="search">
+            <input
+              type="text"
+              data-testid="name-filter"
+              placeholder="search by name"
+              name="search"
+              onChange={ this.searchBar }
             />
-          ))}
+          </label>
+          <div className="savedCards">
+            {savedCards.filter((item) => item.cardName.includes(filterName))
+              .map((item, index) => (
+                <SavedCards
+                  key={ index }
+                  index={ index }
+                  deleteButton={ this.deleteButton }
+                  cardName={ item.cardName }
+                  cardDescription={ item.cardDescription }
+                  cardAttr1={ item.cardAttr1 }
+                  cardAttr2={ item.cardAttr2 }
+                  cardAttr3={ item.cardAttr3 }
+                  cardImage={ item.cardImage }
+                  cardRare={ item.cardRare }
+                  cardTrunfo={ item.cardTrunfo }
+                />
+              ))}
+          </div>
         </div>
       </>
     );
