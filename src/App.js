@@ -2,6 +2,7 @@ import React from 'react';
 import Card from './components/Card';
 import Form from './components/Form';
 import SavedCards from './components/SavedCards';
+import SearchSection from './components/SearchSection';
 
 class App extends React.Component {
   constructor() {
@@ -18,6 +19,9 @@ class App extends React.Component {
       hasTrunfo: false,
       isSaveButtonDisabled: true,
       savedCards: [],
+      filterName: '',
+      filterRarity: 'todas',
+      filterTrunfo: false,
     };
   }
 
@@ -95,7 +99,6 @@ class App extends React.Component {
       cardRare: 'normal',
       cardTrunfo: false,
       isSaveButtonDisabled: true,
-      filterName: '',
     }));
   }
 
@@ -116,15 +119,19 @@ class App extends React.Component {
     }, this.trunfoValidation);
   }
 
-  searchBar = ({ target }) => {
-    const { filterName } = this.state;
-    this.setState({
-      filterName: target.value,
-    });
-    console.log(filterName);
-    /*     const { savedCards } = this.state;
-    savedCards.filter((item) => item.cardName.includes(target.value)) */
-  }
+  /*   filterName = ({ target }) => {
+      this.setState({
+        filterName: target.value,
+      });
+    }
+
+    filterRarity = () => {
+      console.log();
+    }
+
+    filterTrufo = () => {
+
+    } */
 
   render() {
     const {
@@ -138,9 +145,11 @@ class App extends React.Component {
       cardTrunfo,
       hasTrunfo,
       isSaveButtonDisabled,
+      savedCards,
+      filterName,
+      filterRarity,
+      filterTrunfo,
     } = this.state;
-    const { savedCards } = this.state;
-    const { filterName } = this.state;
     return (
       <>
         <h1>Tryunfo(ai Jesus!)</h1>
@@ -171,32 +180,49 @@ class App extends React.Component {
           />
         </div>
         <div className="myCards">
-          <label htmlFor="search">
-            <input
-              type="text"
-              data-testid="name-filter"
-              placeholder="search by name"
-              name="search"
-              onChange={ this.searchBar }
-            />
-          </label>
+          <SearchSection
+            onInputChange={ this.onInputChange }
+            filterName={ filterName }
+            filterRarity={ filterRarity }
+            filterTrunfo={ filterTrunfo }
+          />
           <div className="savedCards">
-            {savedCards.filter((item) => item.cardName.includes(filterName))
-              .map((item, index) => (
-                <SavedCards
-                  key={ index }
-                  index={ index }
-                  deleteButton={ this.deleteButton }
-                  cardName={ item.cardName }
-                  cardDescription={ item.cardDescription }
-                  cardAttr1={ item.cardAttr1 }
-                  cardAttr2={ item.cardAttr2 }
-                  cardAttr3={ item.cardAttr3 }
-                  cardImage={ item.cardImage }
-                  cardRare={ item.cardRare }
-                  cardTrunfo={ item.cardTrunfo }
-                />
-              ))}
+            {
+              filterRarity !== 'todas'
+                ? savedCards.filter((item) => item.cardName.includes(filterName))
+                  .filter((item) => item.cardRare === filterRarity)
+                  .map((item, index) => (
+                    <SavedCards
+                      key={ index }
+                      index={ index }
+                      deleteButton={ this.deleteButton }
+                      cardName={ item.cardName }
+                      cardDescription={ item.cardDescription }
+                      cardAttr1={ item.cardAttr1 }
+                      cardAttr2={ item.cardAttr2 }
+                      cardAttr3={ item.cardAttr3 }
+                      cardImage={ item.cardImage }
+                      cardRare={ item.cardRare }
+                      cardTrunfo={ item.cardTrunfo }
+                    />
+                  ))
+                : savedCards.filter((item) => item.cardName.includes(filterName))
+                  .map((item, index) => (
+                    <SavedCards
+                      key={ index + 1 }
+                      index={ index }
+                      deleteButton={ this.deleteButton }
+                      cardName={ item.cardName }
+                      cardDescription={ item.cardDescription }
+                      cardAttr1={ item.cardAttr1 }
+                      cardAttr2={ item.cardAttr2 }
+                      cardAttr3={ item.cardAttr3 }
+                      cardImage={ item.cardImage }
+                      cardRare={ item.cardRare }
+                      cardTrunfo={ item.cardTrunfo }
+                    />
+                  ))
+            }
           </div>
         </div>
       </>
