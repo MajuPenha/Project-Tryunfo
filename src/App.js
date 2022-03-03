@@ -179,7 +179,7 @@ class App extends React.Component {
                 ? savedCards.filter((item) => item.cardTrunfo === true)
                   .map((item, index) => (
                     <SavedCards
-                      key={ index + 1 }
+                      key={ index }
                       index={ index }
                       deleteButton={ this.deleteButton }
                       cardName={ item.cardName }
@@ -197,6 +197,7 @@ class App extends React.Component {
                     data={ this.state }
                     filterName={ filterName }
                     filterRarity={ filterRarity }
+                    deleteButton={ this.deleteButton }
                   />)
 
             }

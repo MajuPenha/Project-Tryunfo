@@ -8,6 +8,7 @@ class Filter extends React.Component {
       data,
       filterName,
       filterRarity,
+      deleteButton,
     } = this.props;
 
     return (
@@ -18,7 +19,7 @@ class Filter extends React.Component {
             <SavedCards
               key={ index }
               index={ index }
-              deleteButton={ this.deleteButton }
+              deleteButton={ deleteButton }
               cardName={ item.cardName }
               cardDescription={ item.cardDescription }
               cardAttr1={ item.cardAttr1 }
@@ -32,9 +33,9 @@ class Filter extends React.Component {
         : data.savedCards.filter((item) => item.cardName.includes(filterName))
           .map((items, index) => (
             <SavedCards
-              key={ index + 1 }
+              key={ index }
               index={ index }
-              deleteButton={ this.deleteButton }
+              deleteButton={ deleteButton }
               cardName={ items.cardName }
               cardDescription={ items.cardDescription }
               cardAttr1={ items.cardAttr1 }
@@ -55,6 +56,7 @@ Filter.propTypes = {
   savedCards: PropTypes.arrayOf(PropTypes.node),
   filterName: PropTypes.string.isRequired,
   filterRarity: PropTypes.string.isRequired,
+  deleteButton: PropTypes.func.isRequired,
 
 };
 Filter.defaultProps = {
