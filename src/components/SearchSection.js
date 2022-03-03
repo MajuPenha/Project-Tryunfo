@@ -3,7 +3,12 @@ import React from 'react';
 
 class SearchSection extends React.Component {
   render() {
-    const { filterName, filterRarity, filterTrufo, onInputChange } = this.props;
+    const {
+      filterName,
+      filterRarity,
+      filterTrunfo,
+      onInputChange,
+    } = this.props;
     return (
       <>
         <label htmlFor="filterName">
@@ -14,6 +19,7 @@ class SearchSection extends React.Component {
             name="filterName"
             value={ filterName }
             onChange={ onInputChange }
+            disabled={ filterTrunfo }
           />
         </label>
 
@@ -23,6 +29,7 @@ class SearchSection extends React.Component {
             name="filterRarity"
             value={ filterRarity }
             onChange={ onInputChange }
+            disabled={ filterTrunfo }
           >
             <option value="todas">todas</option>
             <option value="normal">normal</option>
@@ -32,14 +39,14 @@ class SearchSection extends React.Component {
           </select>
         </label>
 
-        <label htmlFor="filterTrufo">
+        <label htmlFor="filterTrunfo">
           Super Trunfo:
           {' '}
           <input
             data-testid="trunfo-filter"
             type="checkbox"
-            checked={ filterTrufo }
-            name="filterTrufo"
+            checked={ filterTrunfo }
+            name="filterTrunfo"
             onChange={ onInputChange }
           />
         </label>
@@ -51,7 +58,7 @@ class SearchSection extends React.Component {
 SearchSection.propTypes = {
   filterName: PropTypes.string.isRequired,
   filterRarity: PropTypes.string.isRequired,
-  filterTrufo: PropTypes.string.isRequired,
+  filterTrunfo: PropTypes.bool.isRequired,
   onInputChange: PropTypes.func.isRequired,
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './components/Card';
+import Filter from './components/Filter';
 import Form from './components/Form';
 import SavedCards from './components/SavedCards';
 import SearchSection from './components/SearchSection';
@@ -119,20 +120,6 @@ class App extends React.Component {
     }, this.trunfoValidation);
   }
 
-  /*   filterName = ({ target }) => {
-      this.setState({
-        filterName: target.value,
-      });
-    }
-
-    filterRarity = () => {
-      console.log();
-    }
-
-    filterTrufo = () => {
-
-    } */
-
   render() {
     const {
       cardName,
@@ -152,7 +139,7 @@ class App extends React.Component {
     } = this.state;
     return (
       <>
-        <h1>Tryunfo(ai Jesus!)</h1>
+        <h1>Tryunfo</h1>
         <div className="main-container">
           <Form
             cardName={ cardName }
@@ -188,25 +175,8 @@ class App extends React.Component {
           />
           <div className="savedCards">
             {
-              filterRarity !== 'todas'
-                ? savedCards.filter((item) => item.cardName.includes(filterName))
-                  .filter((item) => item.cardRare === filterRarity)
-                  .map((item, index) => (
-                    <SavedCards
-                      key={ index }
-                      index={ index }
-                      deleteButton={ this.deleteButton }
-                      cardName={ item.cardName }
-                      cardDescription={ item.cardDescription }
-                      cardAttr1={ item.cardAttr1 }
-                      cardAttr2={ item.cardAttr2 }
-                      cardAttr3={ item.cardAttr3 }
-                      cardImage={ item.cardImage }
-                      cardRare={ item.cardRare }
-                      cardTrunfo={ item.cardTrunfo }
-                    />
-                  ))
-                : savedCards.filter((item) => item.cardName.includes(filterName))
+              filterTrunfo
+                ? savedCards.filter((item) => item.cardTrunfo === true)
                   .map((item, index) => (
                     <SavedCards
                       key={ index + 1 }
@@ -222,7 +192,15 @@ class App extends React.Component {
                       cardTrunfo={ item.cardTrunfo }
                     />
                   ))
+                : (
+                  <Filter
+                    data={ this.state }
+                    filterName={ filterName }
+                    filterRarity={ filterRarity }
+                  />)
+
             }
+
           </div>
         </div>
       </>
